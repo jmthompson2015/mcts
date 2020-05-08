@@ -1,8 +1,8 @@
 // Monte Carlo Tree Search
 // see https://en.wikipedia.org/wiki/Monte_Carlo_tree_search
 
-/* eslint no-underscore-dangle: ["error", { "allow": ["_backpropagationClass", "_expansionClass",
-  "_game", "_selectionClass", "_simulationClass"] }] */
+/* eslint no-underscore-dangle: ["error", { "allow": ["_backpropagation", "_expansion", "_game",
+  "_selection", "_simulation"] }] */
 
 import Backpropagation from "./Backpropagation.js";
 import Expansion from "./Expansion.js";
@@ -19,34 +19,34 @@ const determineBestMove = (root) => {
 class MCTS {
   constructor(
     game,
-    selectionClass = Selection,
-    expansionClass = Expansion,
-    simulationClass = Simulation,
-    backpropagationClass = Backpropagation
+    selection = Selection,
+    expansion = Expansion,
+    simulation = Simulation,
+    backpropagation = Backpropagation
   ) {
     this._game = game;
-    this._selectionClass = selectionClass;
-    this._expansionClass = expansionClass;
-    this._simulationClass = simulationClass;
-    this._backpropagationClass = backpropagationClass;
+    this._selection = selection;
+    this._expansion = expansion;
+    this._simulation = simulation;
+    this._backpropagation = backpropagation;
   }
 
   executeSteps(startTime, root, resolve, roundLimit, allowedTime) {
     let time = Date.now();
 
     while (time - startTime < allowedTime) {
-      const leaf = this._selectionClass.execute(root);
+      const leaf = this._selection.execute(root);
       const isGameOver = leaf.isGameOver || leaf.game.isGameOver();
 
       if (isGameOver) {
         const winner = leaf.winner || leaf.game.getWinner();
         leaf.isGameOver = isGameOver;
         leaf.winner = winner;
-        this._backpropagationClass.execute(winner, leaf);
+        this._backpropagation.execute(winner, leaf);
       } else {
-        const child = this._expansionClass.execute(leaf);
-        const winner = this._simulationClass.execute(child, roundLimit);
-        this._backpropagationClass.execute(winner, child);
+        const child = this._expansion.execute(leaf);
+        const winner = this._simulation.execute(child, roundLimit);
+        this._backpropagation.execute(winner, child);
       }
 
       time = Date.now();
