@@ -67,7 +67,7 @@ QUnit.test("execute() win", (assert) => {
   const root = Node.create({ game: game0 });
   const leaf = Node.create({ game: game1, parent: root });
   const child = Node.create({ game: game2, parent: leaf });
-  const winner = "X";
+  const winner = state0.playerInstances[1];
 
   // Run.
   Backpropagation.execute(winner, child);

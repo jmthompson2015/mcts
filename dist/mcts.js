@@ -138,7 +138,7 @@
       if (R.isNil(winner)) {
         // Draw.
         node.winCount += 0.5;
-      } else if (winner === currentPlayer.team) {
+      } else if (winner === currentPlayer) {
         // Win.
         node.winCount += 1;
       }

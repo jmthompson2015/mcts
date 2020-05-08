@@ -18,8 +18,9 @@ QUnit.test("execute()", (assert) => {
   const result = Simulation.execute(child);
 
   // Verify.
+  const { playerInstances } = game.state;
   assert.equal(
-    ["X", "O", undefined].includes(result),
+    [playerInstances[1], playerInstances[2], undefined].includes(result),
     true,
     `result = ${result}`
   );

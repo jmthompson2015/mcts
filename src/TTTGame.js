@@ -36,36 +36,44 @@ class TTTGame {
 
   getWinner() {
     const { board } = this._state;
-    let answer;
+    let token;
 
     // Rows.
-    for (let i = 0; i < 9 && !answer; i += 3) {
+    for (let i = 0; i < 9 && !token; i += 3) {
       if (
         board[i] &&
         board[i] === board[i + 1] &&
         board[i + 1] === board[i + 2]
       ) {
-        answer = board[i];
+        token = board[i];
       }
     }
 
     // Columns.
-    for (let i = 0; i < 3 && !answer; i += 1) {
+    for (let i = 0; i < 3 && !token; i += 1) {
       if (
         board[i] &&
         board[i] === board[i + 3] &&
         board[i + 3] === board[i + 6]
       ) {
-        answer = board[i];
+        token = board[i];
       }
     }
 
     // Diagonals.
-    if (!answer && board[0] && board[0] === board[4] && board[4] === board[8]) {
-      answer = board[0];
+    if (!token && board[0] && board[0] === board[4] && board[4] === board[8]) {
+      token = board[0];
     }
-    if (!answer && board[2] && board[2] === board[4] && board[4] === board[6]) {
-      answer = board[2];
+    if (!token && board[2] && board[2] === board[4] && board[4] === board[6]) {
+      token = board[2];
+    }
+
+    let answer;
+
+    if (token === "X") {
+      answer = this._state.playerInstances[1];
+    } else if (token === "O") {
+      answer = this._state.playerInstances[2];
     }
 
     return answer;

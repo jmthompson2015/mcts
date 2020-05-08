@@ -90,7 +90,8 @@ QUnit.test("getWinner() X", (assert) => {
 
   // Verify.
   assert.ok(result, "result !== undefined");
-  assert.equal(result, "X", `result = ${result}`);
+  const { playerInstances } = game.state;
+  assert.equal(result, playerInstances[1], `result = ${result}`);
 });
 
 QUnit.test("performMove() 2", (assert) => {
