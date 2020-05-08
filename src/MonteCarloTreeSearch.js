@@ -2,7 +2,7 @@
 // see https://en.wikipedia.org/wiki/Monte_Carlo_tree_search
 
 /* eslint no-underscore-dangle: ["error", { "allow": ["_backpropagationClass", "_expansionClass",
-  "_gameClass", "_selectionClass", "_simulationClass"] }] */
+  "_game", "_gameClass", "_selectionClass", "_simulationClass"] }] */
 
 import Backpropagation from "./Backpropagation.js";
 import Expansion from "./Expansion.js";
@@ -25,13 +25,14 @@ const determineBestMove = (root) => {
 
 class MCTS {
   constructor(
-    gameClass,
+    game,
     selectionClass = Selection,
     expansionClass = Expansion,
     simulationClass = Simulation,
     backpropagationClass = Backpropagation
   ) {
-    this._gameClass = gameClass;
+    this._game = game;
+    this._gameClass = game.constructor;
     this._selectionClass = selectionClass;
     this._expansionClass = expansionClass;
     this._simulationClass = simulationClass;
@@ -63,10 +64,10 @@ class MCTS {
     resolve(move);
   }
 
-  execute(game, roundLimit = 100, allowedTime = 5000) {
+  execute(roundLimit = 100, allowedTime = 1000) {
     return new Promise((resolve) => {
       const startTime = Date.now();
-      const root = Node.create({ game });
+      const root = Node.create({ game: this._game });
       this.executeSteps(startTime, root, resolve, roundLimit, allowedTime);
     });
   }

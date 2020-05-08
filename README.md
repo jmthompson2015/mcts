@@ -1,5 +1,7 @@
 # Monte Carlo Tree Search
 
+Implements a [Monte Carlo Tree Search](https://en.wikipedia.org/wiki/Monte_Carlo_tree_search) for games.
+
 ## Usage
 
 Implement a game class that has the following methods:
@@ -13,13 +15,18 @@ Implement a game class that has the following methods:
 - performMove(move) updates the internal state of the game base on the move
 - state() getter
 
+Then to get the next move an application should call mcts.execute(), which returns a [Promise](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise).
+
 ```javascript
-const mcts = new MonteCarloTreeSearch(Game);
-const game = new Game();
+const state = {
+  /* ... */
+};
+const game = new Game(state);
+const mcts = new MonteCarloTreeSearch(game);
 const callback = (move) => {
   console.log(move);
 };
-mcts.execute(game, ROUND_LIMIT, ALLOWED_TIME).then(callback);
+mcts.execute(ROUND_LIMIT, ALLOWED_TIME).then(callback);
 ```
 
 ## Built With
@@ -32,4 +39,4 @@ mcts.execute(game, ROUND_LIMIT, ALLOWED_TIME).then(callback);
 ## Inspired By
 
 - [Monte Carlo tree search](https://en.wikipedia.org/wiki/Monte_Carlo_tree_search)
-- [MCTS](https://github.com/dbravender/mcts)
+- [MCTS](https://github.com/dbravender/mcts) by Dan Bravender

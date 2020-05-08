@@ -1,5 +1,4 @@
 import TTTData from "./TTTData.js";
-import TTTGame from "./TTTGame.js";
 
 import MCTS from "./MonteCarloTreeSearch.js";
 
@@ -11,7 +10,7 @@ const ROUND_LIMIT = 10;
 QUnit.test("execute() 1", (assert) => {
   // Setup.
   const game = TTTData.createGame1();
-  const mcts = new MCTS(TTTGame);
+  const mcts = new MCTS(game);
 
   // Run.
   const done = assert.async();
@@ -28,13 +27,13 @@ QUnit.test("execute() 1", (assert) => {
     done();
   };
 
-  mcts.execute(game, ROUND_LIMIT, ALLOWED_TIME).then(callback);
+  mcts.execute(ROUND_LIMIT, ALLOWED_TIME).then(callback);
 });
 
 QUnit.test("execute() 2", (assert) => {
   // Setup.
   const game = TTTData.createGame2();
-  const mcts = new MCTS(TTTGame);
+  const mcts = new MCTS(game);
 
   // Run.
   const done = assert.async();
@@ -47,7 +46,7 @@ QUnit.test("execute() 2", (assert) => {
     done();
   };
 
-  mcts.execute(game, ROUND_LIMIT, ALLOWED_TIME).then(callback);
+  mcts.execute(ROUND_LIMIT, ALLOWED_TIME).then(callback);
 });
 
 const MCTSTest = {};
