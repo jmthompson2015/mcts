@@ -229,13 +229,14 @@
 
   class MCTS {
     constructor(
-      gameClass,
+      game,
       selectionClass = Selection,
       expansionClass = Expansion,
       simulationClass = Simulation,
       backpropagationClass = Backpropagation
     ) {
-      this._gameClass = gameClass;
+      this._game = game;
+      this._gameClass = game.constructor;
       this._selectionClass = selectionClass;
       this._expansionClass = expansionClass;
       this._simulationClass = simulationClass;
@@ -267,10 +268,10 @@
       resolve(move);
     }
 
-    execute(game, roundLimit = 100, allowedTime = 5000) {
+    execute(roundLimit = 100, allowedTime = 1000) {
       return new Promise((resolve) => {
         const startTime = Date.now();
-        const root = Node.create({ game });
+        const root = Node.create({ game: this._game });
         this.executeSteps(startTime, root, resolve, roundLimit, allowedTime);
       });
     }
