@@ -2,7 +2,7 @@
 // see https://en.wikipedia.org/wiki/Monte_Carlo_tree_search
 
 /* eslint no-underscore-dangle: ["error", { "allow": ["_backpropagationClass", "_expansionClass",
-  "_game", "_gameClass", "_selectionClass", "_simulationClass"] }] */
+  "_game", "_selectionClass", "_simulationClass"] }] */
 
 import Backpropagation from "./Backpropagation.js";
 import Expansion from "./Expansion.js";
@@ -15,9 +15,8 @@ const determineBestMove = (root) => {
   let answer;
 
   if (bestChildNode) {
-    const { game } = bestChildNode;
-    const { state } = game;
-    answer = state.currentMove;
+    const { state } = bestChildNode.game;
+    answer = state.move;
   }
 
   return answer;
@@ -32,7 +31,6 @@ class MCTS {
     backpropagationClass = Backpropagation
   ) {
     this._game = game;
-    this._gameClass = game.constructor;
     this._selectionClass = selectionClass;
     this._expansionClass = expansionClass;
     this._simulationClass = simulationClass;
@@ -52,7 +50,7 @@ class MCTS {
         leaf.winner = winner;
         this._backpropagationClass.execute(winner, leaf);
       } else {
-        const child = this._expansionClass.execute(leaf, this._gameClass);
+        const child = this._expansionClass.execute(leaf);
         const winner = this._simulationClass.execute(child, roundLimit);
         this._backpropagationClass.execute(winner, child);
       }

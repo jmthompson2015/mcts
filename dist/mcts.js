@@ -148,27 +148,21 @@
 
   Object.freeze(Backpropagation);
 
-  /* eslint new-cap: ["error", { "capIsNew": false, "newIsCap": false }] */
-
   const Expansion = {};
 
-  Expansion.execute = (leaf0, gameClass) => {
+  Expansion.execute = (leaf0) => {
     const leaf = leaf0;
     const { game } = leaf;
 
-    const moveStates = game.getPossibleMoves();
-    const mapFunction = (moveState) => {
-      const state2 = Immutable({
-        ...game.state,
-        currentMoves: moveStates,
-        currentMove: moveState,
-      });
-      const game2 = new gameClass(state2);
-      game2.performMove(moveState);
+    const moves = game.getPossibleMoves();
+    const mapFunction = (move) => {
+      const newState = Immutable({ ...game.state, move });
+      const newGame = new game.constructor(newState);
+      newGame.performMove(move);
 
-      return Node.create({ game: game2, parent: leaf });
+      return Node.create({ game: newGame, parent: leaf });
     };
-    leaf.children = R.map(mapFunction, moveStates);
+    leaf.children = R.map(mapFunction, moves);
 
     return ArrayUtilities.randomElement(leaf.children);
   };
@@ -219,9 +213,8 @@
     let answer;
 
     if (bestChildNode) {
-      const { game } = bestChildNode;
-      const { state } = game;
-      answer = state.currentMove;
+      const { state } = bestChildNode.game;
+      answer = state.move;
     }
 
     return answer;
@@ -236,7 +229,6 @@
       backpropagationClass = Backpropagation
     ) {
       this._game = game;
-      this._gameClass = game.constructor;
       this._selectionClass = selectionClass;
       this._expansionClass = expansionClass;
       this._simulationClass = simulationClass;
@@ -256,7 +248,7 @@
           leaf.winner = winner;
           this._backpropagationClass.execute(winner, leaf);
         } else {
-          const child = this._expansionClass.execute(leaf, this._gameClass);
+          const child = this._expansionClass.execute(leaf);
           const winner = this._simulationClass.execute(child, roundLimit);
           this._backpropagationClass.execute(winner, child);
         }
