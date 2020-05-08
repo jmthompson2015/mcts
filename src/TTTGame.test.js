@@ -96,7 +96,7 @@ QUnit.test("getWinner() X", (assert) => {
 QUnit.test("performMove() 2", (assert) => {
   // Setup.
   const move0 = { index: 2, token: "X" };
-  const state0 = { ...TTTData.createState2(), move: move0 };
+  const state0 = { ...TTTData.createState2() };
   const game = TTTData.createGame(state0);
 
   // Run.
@@ -104,7 +104,7 @@ QUnit.test("performMove() 2", (assert) => {
 
   // Verify.
   const { state } = game;
-  const { board, move, currentPlayerId } = state;
+  const { board, currentPlayerId } = state;
   assert.equal(board[0], "X", `board[0] = ${board[0]}`);
   assert.equal(board[1], "X", `board[1] = ${board[1]}`);
   assert.equal(board[2], "X", `board[2] = ${board[2]}`);
@@ -116,9 +116,6 @@ QUnit.test("performMove() 2", (assert) => {
   assert.equal(board[8], null, `board[8] = ${board[8]}`);
 
   assert.equal(currentPlayerId, 2, `currentPlayerId = ${currentPlayerId}`);
-  assert.ok(move, "move !== undefined");
-  assert.equal(move.index, 2, `move.index = ${move.index}`);
-  assert.equal(move.token, "X", `move.token = ${move.token}`);
 });
 
 const TTTGameTest = {};

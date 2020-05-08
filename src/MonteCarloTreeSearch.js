@@ -12,14 +12,8 @@ import Simulation from "./Simulation.js";
 
 const determineBestMove = (root) => {
   const bestChildNode = Node.best(R.prop("playoutCount"), root.children, true);
-  let answer;
 
-  if (bestChildNode) {
-    const { state } = bestChildNode.game;
-    answer = state.move;
-  }
-
-  return answer;
+  return bestChildNode ? bestChildNode.move : undefined;
 };
 
 class MCTS {

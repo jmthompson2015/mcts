@@ -14,6 +14,7 @@ Node.create = ({
   // Optional.
   children = [],
   isGameOver = false,
+  move = null,
   parent,
   playoutCount = 0,
   winCount = 0,
@@ -22,6 +23,7 @@ Node.create = ({
   children,
   game,
   isGameOver,
+  move,
   parent,
   playoutCount,
   winCount,

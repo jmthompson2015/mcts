@@ -9,11 +9,10 @@ Expansion.execute = (leaf0) => {
 
   const moves = game.getPossibleMoves();
   const mapFunction = (move) => {
-    const newState = Immutable({ ...game.state, move });
-    const newGame = new game.constructor(newState);
+    const newGame = game.clone();
     newGame.performMove(move);
 
-    return Node.create({ game: newGame, parent: leaf });
+    return Node.create({ game: newGame, move, parent: leaf });
   };
   leaf.children = R.map(mapFunction, moves);
 

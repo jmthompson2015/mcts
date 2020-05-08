@@ -6,7 +6,6 @@ TTTData.createState0 = () =>
   Immutable({
     board: [null, null, null, null, null, null, null, null, null],
     currentPlayerId: 1,
-    move: null,
     playerInstances: {
       1: { id: 1, name: "Alfred", team: "X" },
       2: { id: 2, name: "Bruce", team: "O" },

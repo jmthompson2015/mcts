@@ -37,6 +37,7 @@
     // Optional.
     children = [],
     isGameOver = false,
+    move = null,
     parent,
     playoutCount = 0,
     winCount = 0,
@@ -45,6 +46,7 @@
     children,
     game,
     isGameOver,
+    move,
     parent,
     playoutCount,
     winCount,
@@ -156,11 +158,10 @@
 
     const moves = game.getPossibleMoves();
     const mapFunction = (move) => {
-      const newState = Immutable({ ...game.state, move });
-      const newGame = new game.constructor(newState);
+      const newGame = game.clone();
       newGame.performMove(move);
 
-      return Node.create({ game: newGame, parent: leaf });
+      return Node.create({ game: newGame, move, parent: leaf });
     };
     leaf.children = R.map(mapFunction, moves);
 
@@ -210,14 +211,8 @@
 
   const determineBestMove = (root) => {
     const bestChildNode = Node.best(R.prop("playoutCount"), root.children, true);
-    let answer;
 
-    if (bestChildNode) {
-      const { state } = bestChildNode.game;
-      answer = state.move;
-    }
-
-    return answer;
+    return bestChildNode ? bestChildNode.move : undefined;
   };
 
   class MCTS {
