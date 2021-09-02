@@ -1,11 +1,11 @@
 const { terser } = require("rollup-plugin-terser");
 
 export default {
-  input: "src/MonteCarloTreeSearch.js",
+  input: "MCTS.js",
   output: {
     file: "./dist/mcts.min.js",
     format: "umd",
-    name: "MonteCarloTreeSearch",
+    name: "MCTS",
   },
   plugins: [terser()],
 };

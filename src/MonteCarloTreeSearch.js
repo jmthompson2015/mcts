@@ -17,13 +17,13 @@ const determineBestMove = (root) => {
 };
 
 class MCTS {
-  constructor(
+  constructor({
     game,
     selection = Selection,
     expansion = Expansion,
     simulation = Simulation,
-    backpropagation = Backpropagation
-  ) {
+    backpropagation = Backpropagation,
+  }) {
     this._game = game;
     this._selection = selection;
     this._expansion = expansion;

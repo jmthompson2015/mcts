@@ -1,7 +1,7 @@
 (function (global, factory) {
   typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory() :
   typeof define === 'function' && define.amd ? define(factory) :
-  (global = global || self, global.MonteCarloTreeSearch = factory());
+  (global = global || self, global.MCTS = factory());
 }(this, (function () { 'use strict';
 
   const ArrayUtilities = {};
@@ -216,13 +216,13 @@
   };
 
   class MCTS {
-    constructor(
+    constructor({
       game,
       selection = Selection,
       expansion = Expansion,
       simulation = Simulation,
-      backpropagation = Backpropagation
-    ) {
+      backpropagation = Backpropagation,
+    }) {
       this._game = game;
       this._selection = selection;
       this._expansion = expansion;
@@ -266,6 +266,17 @@
 
   Object.freeze(MCTS);
 
-  return MCTS;
+  const MCTS$1 = {};
+
+  MCTS$1.Node = Node;
+  MCTS$1.Selection = Selection;
+  MCTS$1.Expansion = Expansion;
+  MCTS$1.Simulation = Simulation;
+  MCTS$1.Backpropagation = Backpropagation;
+  MCTS$1.MonteCarloTreeSearch = MCTS;
+
+  Object.freeze(MCTS$1);
+
+  return MCTS$1;
 
 })));

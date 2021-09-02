@@ -1,8 +1,8 @@
 export default {
-  input: "src/MonteCarloTreeSearch.js",
+  input: "MCTS.js",
   output: {
     file: "./dist/mcts.js",
     format: "umd",
-    name: "MonteCarloTreeSearch",
+    name: "MCTS",
   },
 };

@@ -10,7 +10,7 @@ const ROUND_LIMIT = 10;
 QUnit.test("execute() 1", (assert) => {
   // Setup.
   const game = TTTData.createGame1();
-  const mcts = new MCTS(game);
+  const mcts = new MCTS({ game });
 
   // Run.
   const done = assert.async();
@@ -33,7 +33,7 @@ QUnit.test("execute() 1", (assert) => {
 QUnit.test("execute() 2", (assert) => {
   // Setup.
   const game = TTTData.createGame2();
-  const mcts = new MCTS(game);
+  const mcts = new MCTS({ game });
 
   // Run.
   const done = assert.async();
