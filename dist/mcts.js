@@ -223,6 +223,9 @@
       simulation = Simulation,
       backpropagation = Backpropagation,
     }) {
+      if (R.isNil(game)) {
+        throw new Error(`MCTS constructor(): game is required`);
+      }
       this._game = game;
       this._selection = selection;
       this._expansion = expansion;
@@ -244,8 +247,11 @@
           this._backpropagation.execute(winner, leaf);
         } else {
           const child = this._expansion.execute(leaf);
-          const winner = this._simulation.execute(child, roundLimit);
-          this._backpropagation.execute(winner, child);
+
+          if (!R.isNil(child)) {
+            const winner = this._simulation.execute(child, roundLimit);
+            this._backpropagation.execute(winner, child);
+          }
         }
 
         time = Date.now();
